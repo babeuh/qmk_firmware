@@ -128,7 +128,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_ESC, KC_TAB, KC_ENT, KC_BSPC, KC_MNXT,     KC_NO, KC_LSFT, KC_LCTL, KC_LALT, GB_GUI,
         GB_ESC, GB_TAB, GB_ENT, GB_BSP,  KC_MPLY,     KC_NO, GBS_SFT, GBS_CTL, GBS_ALT, GBS_GUI,
 	KC_NO,  KC_NO,  KC_NO,  KC_DEL,  KC_MNXT,     KC_NO, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,
-	                          KC_TRNS, KC_NO,     KC_NO, TO(_DEFAULT)
+	                  KC_TRNS, OSM(MOD_LGUI),     KC_NO, TO(_DEFAULT)
     ),
     // Symbols
     [LR_SYM] = LAYOUT(

@@ -142,7 +142,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_SLSH, KC_7, KC_8, KC_9, KC_PLUS,    OSM(MOD_LCTL), KC_F9, KC_F8, KC_F7, KC_NO,
         KC_0,    KC_1, KC_2, KC_3, KC_MINS,    OSM(MOD_LALT), KC_F3, KC_F2, KC_F1, KC_NO,
 	KC_ASTR, KC_4, KC_5, KC_6, KC_EQL,     OSM(MOD_LGUI), KC_F6, KC_F5, KC_F4, KC_NO,
-	                  KC_TRNS, KC_TRNS,    KC_NO, TO(_DEFAULT)
+	                  KC_TRNS, KC_NO,    KC_NO, TO(_DEFAULT)
     ),
     // Accents
     [LR_ACC] = LAYOUT(

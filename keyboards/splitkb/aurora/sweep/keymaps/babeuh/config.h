@@ -21,4 +21,4 @@
 // Liatris
 #define USB_VBUS_PIN 19U
 
-#define COMBO_COUNT 2
+#define COMBO_COUNT 3

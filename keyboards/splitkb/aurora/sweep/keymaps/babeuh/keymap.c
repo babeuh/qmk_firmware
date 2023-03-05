@@ -19,13 +19,14 @@
 
 enum layers {
     _DEFAULT = 0,
+    _GAMING,
     LR_EXT,
     LR_SYM,
     LR_NUM,
     LR_ACC
 };
 
-enum my_keycodes {
+enum custom_keycodes {
     GB_ESC = SAFE_RANGE,
     GB_TAB,
     GB_ENT,
@@ -34,7 +35,8 @@ enum my_keycodes {
     GBS_SFT,
     GBS_CTL,
     GBS_ALT,
-    GBS_GUI
+    GBS_GUI,
+    TG_MD
 };
 
 enum unicode_names {
@@ -103,9 +105,11 @@ const uint32_t unicode_map[] PROGMEM = {
 };
 
 const uint16_t PROGMEM go_lr_num[] = {LT(LR_EXT, KC_NO), OSM(MOD_LSFT), COMBO_END};
+const uint16_t PROGMEM go_lr_num_gam[] = {LT(LR_EXT, KC_NO), KC_SPC, COMBO_END};
 const uint16_t PROGMEM go_lr_acc[] = {LT(LR_SYM, KC_NO), KC_SPC, COMBO_END};
 combo_t key_combos[COMBO_COUNT] = {
     COMBO(go_lr_num, LT(LR_NUM, KC_NO)),
+    COMBO(go_lr_num_gam, LT(LR_NUM, KC_NO)),
     COMBO(go_lr_acc, LT(LR_ACC, KC_NO)),
 };
 
@@ -117,48 +121,61 @@ combo_t key_combos[COMBO_COUNT] = {
 //   - Use when moving down
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_DEFAULT] = LAYOUT(
-        KC_Q, KC_W, KC_F, KC_P,     KC_B,    KC_J, KC_L, KC_U, KC_Y, KC_SCLN,
-        KC_A, KC_R, KC_S, KC_T,     KC_G,    KC_M, KC_N, KC_E, KC_I, KC_O,
-        KC_Z, KC_X, KC_C, KC_D,     KC_V,    KC_K, KC_H, KC_COMM, KC_DOT, KC_SLSH,
-	LT(LR_EXT, KC_NO), OSM(MOD_LSFT),    KC_SPC, LT(LR_SYM, KC_NO)
+      KC_Q, KC_W, KC_F, KC_P,     KC_B,    KC_J, KC_L, KC_U, KC_Y, KC_SCLN,
+      KC_A, KC_R, KC_S, KC_T,     KC_G,    KC_M, KC_N, KC_E, KC_I, KC_O,
+      KC_Z, KC_X, KC_C, KC_D,     KC_V,    KC_K, KC_H, KC_COMM, KC_DOT, KC_SLSH,
+      LT(LR_EXT, KC_NO), OSM(MOD_LSFT),    KC_SPC, LT(LR_SYM, KC_NO)
+    ),
+
+    [_GAMING] = LAYOUT(
+      KC_Q,    KC_R, KC_X, KC_E,  KC_T,    KC_Y, KC_U, KC_I, KC_O, KC_P,
+      KC_LSFT, KC_A, KC_W, KC_D,  KC_G,    KC_H, KC_J, KC_K, KC_L, KC_Q,
+      KC_LCTL, KC_Z, KC_S, KC_F,  KC_C,    KC_N, KC_H, KC_M, KC_V, KC_DOT,
+             KC_SPC, LT(LR_EXT, KC_NO),    KC_SPC, LT(LR_SYM, KC_NO)
     ),
 
     // Navigation and Media
     [LR_EXT] = LAYOUT(
-        KC_ESC, KC_TAB, KC_ENT, KC_BSPC, KC_MNXT,     KC_NO, KC_LSFT, KC_LCTL, KC_LALT, GB_GUI,
-        GB_ESC, GB_TAB, GB_ENT, GB_BSP,  KC_MPLY,     KC_NO, GBS_SFT, GBS_CTL, GBS_ALT, GBS_GUI,
-	KC_NO,  KC_NO,  KC_NO,  KC_DEL,  KC_MNXT,     KC_NO, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,
-	                  KC_TRNS, OSM(MOD_LGUI),     KC_NO, TO(_DEFAULT)
+      KC_ESC, KC_TAB, KC_ENT, KC_BSPC, KC_MPRV,     QK_BOOT, KC_LSFT, KC_LCTL, KC_LALT, GB_GUI,
+      GB_ESC, GB_TAB, GB_ENT, GB_BSP,  KC_MPLY,     TG_MD,   GBS_SFT, GBS_CTL, GBS_ALT, OSM(MOD_LGUI),
+      KC_NO,  KC_NO,  KC_NO,  KC_DEL,  KC_MNXT,     KC_NO,   KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,
+                             TG(LR_EXT), KC_NO,     KC_NO, GBS_GUI
     ),
     // Symbols
     [LR_SYM] = LAYOUT(
         KC_CIRC, KC_EXLM, KC_QUES, KC_AT,   KC_PERC,    KC_AMPR, KC_TILD, KC_PIPE, KC_GRV,  X(UNI_DEGR),
         KC_LABK, KC_SCLN, KC_LCBR, KC_LPRN, KC_LBRC,    KC_HASH, KC_MINS, KC_SLSH, KC_DQUO, KC_DLR,
-	KC_RABK, KC_COLN, KC_RCBR, KC_RPRN, KC_RBRC,    KC_ASTR, KC_UNDS, KC_BSLS, KC_QUOT, X(UNI_EURO),
-	                        TO(_DEFAULT), KC_NO,    KC_NO, KC_TRNS
+    KC_RABK, KC_COLN, KC_RCBR, KC_RPRN, KC_RBRC,    KC_ASTR, KC_UNDS, KC_BSLS, KC_QUOT, X(UNI_EURO),
+                                  KC_NO, KC_EQL,    KC_NO, TG(LR_SYM)
     ),
     // Numbers (and F-keys)
     [LR_NUM] = LAYOUT(
-        KC_SLSH, KC_7, KC_8, KC_9, KC_PLUS,    OSM(MOD_LCTL), KC_F9, KC_F8, KC_F7, KC_NO,
-        KC_0,    KC_1, KC_2, KC_3, KC_MINS,    OSM(MOD_LALT), KC_F3, KC_F2, KC_F1, KC_NO,
-	KC_ASTR, KC_4, KC_5, KC_6, KC_EQL,     OSM(MOD_LGUI), KC_F6, KC_F5, KC_F4, KC_NO,
-	                  KC_TRNS, KC_NO,    KC_NO, TO(_DEFAULT)
+        KC_SLSH, KC_7, KC_8, KC_9, KC_PLUS,    OSM(MOD_LCTL), KC_F12, KC_F11, KC_F10, KC_F9,
+        KC_0,    KC_1, KC_2, KC_3, KC_MINS,    OSM(MOD_LALT), KC_F4, KC_F3, KC_F2, KC_F1,
+    KC_ASTR, KC_4, KC_5, KC_6,  KC_EQL,    OSM(MOD_LGUI), KC_F8, KC_F7, KC_F6, KC_F5,
+                          KC_NO, KC_NO,    KC_NO, TG(LR_NUM)
     ),
     // Accents
     [LR_ACC] = LAYOUT(
         XP(ACS_OCIRC, ACC_OCIRC), XP(ACS_UCIRC, ACC_UCIRC), XP(ACS_ACIRC, ACC_ACIRC), XP(ACS_ECIRC, ACC_ECIRC), XP(ACS_ITREM, ACC_ITREM),    KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
         XP(ACS_OTREM, ACC_OTREM), XP(ACS_UTREM, ACC_UTREM), XP(ACS_ATREM, ACC_ATREM), XP(ACS_EAIGU, ACC_EAIGU), XP(ACS_ETREM, ACC_ETREM),    KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
-	KC_NO,                    XP(ACS_ESZ, ACC_ESZ),     XP(ACS_AGRAV, ACC_AGRAV), XP(ACS_EGRAV, ACC_EGRAV), XP(ACS_ITREM, ACC_ITREM),     KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
-	               TO(_DEFAULT), KC_NO,    KC_TRNS, KC_TRNS
+    KC_NO,                    XP(ACS_ESZ, ACC_ESZ),     XP(ACS_AGRAV, ACC_AGRAV), XP(ACS_EGRAV, ACC_EGRAV), XP(ACS_ITREM, ACC_ITREM),    KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+                                                                                                                   TG(LR_ACC), KC_NO,    KC_NO, KC_NO
     ),
 };
 
 uint8_t current_layer = _DEFAULT;
+uint8_t layer_mode = _DEFAULT;
 layer_state_t layer_state_set_user(layer_state_t state) {
   current_layer = get_highest_layer(state);
   switch (current_layer) {
     case _DEFAULT:
+      layer_mode = current_layer;
       rgb_matrix_sethsv_noeeprom(HSV_AZURE);
+      break;
+    case _GAMING:
+      layer_mode = current_layer;
+      rgb_matrix_sethsv_noeeprom(HSV_RED);
       break;
     case LR_EXT:
       rgb_matrix_sethsv_noeeprom(HSV_GOLD);
@@ -181,13 +198,16 @@ void gb_handler(uint16_t keycode, keyrecord_t *record) {
     register_code(keycode);
   } else {
     unregister_code(keycode);
+    if (current_layer == _GAMING || current_layer == _DEFAULT) return;
     layer_off(current_layer);
   }
 }
 
-void gbs_handler(uint16_t keycode) {
-  set_oneshot_mods(MOD_BIT(keycode));
-  layer_off(current_layer);
+void gbs_handler(uint16_t keycode, keyrecord_t *record) {
+  if (record->event.pressed) {
+    set_oneshot_mods(MOD_BIT(keycode));
+    layer_off(current_layer);
+  }
 }
 
 bool lt_handler(uint8_t layer, keyrecord_t *record) {
@@ -227,16 +247,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       gb_handler(KC_LGUI, record);
       return false;
     case GBS_SFT:
-      gbs_handler(KC_LSFT);
+      gbs_handler(KC_LSFT, record);
       return false;
     case GBS_CTL:
-      gbs_handler(KC_LCTL);
+      gbs_handler(KC_LCTL, record);
       return false;
     case GBS_ALT:
-      gbs_handler(KC_LALT);
+      gbs_handler(KC_LALT, record);
       return false;
     case GBS_GUI:
-      gbs_handler(KC_LGUI);
+      gbs_handler(KC_LGUI, record);
+      return false;
+    case TG_MD:
+      if (record->event.pressed) {
+        if (current_layer != _GAMING && current_layer != _DEFAULT) layer_off(current_layer);
+        if (layer_mode == _DEFAULT) {
+      layer_on(_GAMING);
+        } else if (layer_mode == _GAMING) {
+      layer_off(_GAMING);
+        }
+      }
       return false;
   }
   return true;
@@ -248,9 +278,9 @@ uint32_t startup_exec(uint32_t trigger_time, void *cb_arg) {
     host_os = detected_host_os();
     if (host_os) {
       if (host_os == OS_LINUX) {
-	set_unicode_input_mode(UNICODE_MODE_LINUX);
+    set_unicode_input_mode(UNICODE_MODE_LINUX);
       } else if (host_os == OS_WINDOWS) {
-	set_unicode_input_mode(UNICODE_MODE_WINCOMPOSE);
+    set_unicode_input_mode(UNICODE_MODE_WINCOMPOSE);
       } else if (host_os == OS_MACOS || host_os == OS_IOS) {
         set_unicode_input_mode(UNICODE_MODE_MACOS);
       };

@@ -147,14 +147,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [LR_EXT] = LAYOUT(
         KC_ESC, KC_TAB, KC_ENT, KC_BSPC, KC_MPRV,     QK_BOOT, KC_LSFT, KC_LCTL, KC_LALT, GB_GUI,
         GB_ESC, GB_TAB, GB_ENT, GB_BSP,  KC_MPLY,     TG_MD,   GBS_SFT, GBS_CTL, GBS_ALT, GBS_GUI,
-        KC_NO,  KC_NO,  KC_NO,  KC_DEL,  KC_MNXT,     NK_TOGG,   KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,
+        KC_NO,  KC_NO,  KC_NO,  KC_DEL,  KC_MNXT,     NK_TOGG, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,
                                TG(LR_EXT), KC_NO,     KC_NO, KC_NO
     ),
     // Symbols
     [LR_SYM] = LAYOUT(
         KC_CIRC, KC_EXLM, KC_QUES, KC_AT,   KC_PERC,    KC_AMPR, KC_TILD, KC_PIPE, KC_GRV,  X(UNI_DEGR),
-        KC_LABK, KC_SCLN, KC_LCBR, KC_LPRN, KC_LBRC,    KC_HASH, KC_MINS, KC_SLSH, KC_DQUO, KC_DLR,
-        KC_RABK, KC_COLN, KC_RCBR, KC_RPRN, KC_RBRC,    KC_ASTR, KC_UNDS, KC_BSLS, KC_QUOT, X(UNI_EURO),
+        KC_LABK, KC_SCLN, KC_LCBR, KC_LPRN, KC_LBRC,    KC_HASH, KC_MINS, KC_SLSH, KC_QUOT, KC_DLR,
+        KC_RABK, KC_COLN, KC_RCBR, KC_RPRN, KC_RBRC,    KC_ASTR, KC_UNDS, KC_BSLS, KC_DQUO, X(UNI_EURO),
                                       KC_EQL, KC_NO,    KC_NO, TG(LR_SYM)
     ),
     // Numbers (and F-keys)

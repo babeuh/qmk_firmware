@@ -22,3 +22,9 @@
 #define USB_VBUS_PIN 19U
 
 #define COMBO_COUNT 3
+
+
+#define USB_POLLING_RATE_INTERVAL_MS 1
+#define QMK_KEYS_PER_SCAN 4
+#define DEBOUNCE 5
+#define FORCE_NKRO

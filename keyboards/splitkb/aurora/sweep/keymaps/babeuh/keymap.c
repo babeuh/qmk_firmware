@@ -132,52 +132,52 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 const uint32_t unicode_map[] PROGMEM = {
     // A
-    [U_SAGRAV] = 0x00e0,
-    [U_CAGRAV] = 0x00c0,
-    [U_SACIRC] = 0x00e2,
-    [U_CACIRC] = 0x00c2,
-    [U_SATREM] = 0x00e4,
-    [U_CATREM] = 0x00c4,
+    [U_SAGRAV] = 0x00E0,
+    [U_CAGRAV] = 0x00C0,
+    [U_SACIRC] = 0x00E2,
+    [U_CACIRC] = 0x00C2,
+    [U_SATREM] = 0x00E4,
+    [U_CATREM] = 0x00C4,
 
     // Ç
-    [U_SCCEDI] = 0x00e7,
-    [U_CCCEDI] = 0x00c7,
+    [U_SCCEDI] = 0x00E7,
+    [U_CCCEDI] = 0x00C7,
 
     // E
-    [U_SEAIGU] = 0x00e9,
-    [U_CEAIGU] = 0x00c9,
-    [U_SEGRAV] = 0x00e8,
-    [U_CEGRAV] = 0x00c8,
-    [U_SECIRC] = 0x00ea,
-    [U_CECIRC] = 0x00ca,
-    [U_SETREM] = 0x00eb,
-    [U_CETREM] = 0x00cb,
+    [U_SEAIGU] = 0x00E9,
+    [U_CEAIGU] = 0x00C9,
+    [U_SEGRAV] = 0x00E8,
+    [U_CEGRAV] = 0x00C8,
+    [U_SECIRC] = 0x00EA,
+    [U_CECIRC] = 0x00CA,
+    [U_SETREM] = 0x00EB,
+    [U_CETREM] = 0x00CB,
 
     // I
-    [U_SITREM] = 0x00ef,
-    [U_CITREM] = 0x00cf,
+    [U_SITREM] = 0x00EF,
+    [U_CITREM] = 0x00CF,
 
     // O
-    [U_SOCIRC] = 0x00f4,
-    [U_COCIRC] = 0x00d4,
-    [U_SOTREM] = 0x00f6,
-    [U_COTREM] = 0x00d6,
+    [U_SOCIRC] = 0x00F4,
+    [U_COCIRC] = 0x00D4,
+    [U_SOTREM] = 0x00F6,
+    [U_COTREM] = 0x00D6,
 
     // ẞ
-    [U_SESZET] = 0x00df,
-    [U_CESZET] = 0x1e9e,
+    [U_SESZET] = 0x00DF,
+    [U_CESZET] = 0x1E9E,
 
     // U
-    [U_SUCIRC] = 0x00fb,
-    [U_CUCIRC] = 0x00db,
-    [U_SUTREM] = 0x00fc,
-    [U_CUTREM] = 0x00dc,
+    [U_SUCIRC] = 0x00FB,
+    [U_CUCIRC] = 0x00DB,
+    [U_SUTREM] = 0x00FC,
+    [U_CUTREM] = 0x00DC,
 
     // °
-    [U_DEG] = 0x00b0,
+    [U_DEG] = 0x00B0,
 
     // €
-    [U_EUR] = 0x20ac
+    [U_EUR] = 0x20AC
 };
 
 const uint16_t PROGMEM number_layer_combo[] = {LT(_EXT, KC_NO), OSM(MOD_LSFT), COMBO_END};

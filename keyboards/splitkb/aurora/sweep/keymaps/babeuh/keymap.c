@@ -115,7 +115,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
             rgb_matrix_sethsv_noeeprom(HSV_RED);
             break;
         case _EXT:
-            rgb_matrix_sethsv_noeeprom(HSV_YELLOW);
+            rgb_matrix_sethsv_noeeprom(HSV_GOLD);
             break;
         case _SYM:
             rgb_matrix_sethsv_noeeprom(HSV_TEAL);
@@ -124,7 +124,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
             rgb_matrix_sethsv_noeeprom(HSV_CHARTREUSE);
             break;
         case _ACC:
-            rgb_matrix_sethsv_noeeprom(HSV_PINK);
+            rgb_matrix_sethsv_noeeprom(HSV_CORAL);
             break;
     }
   return state;

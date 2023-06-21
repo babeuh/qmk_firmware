@@ -54,6 +54,10 @@ enum unicode_names {
     U_SOTREM,
     U_COTREM,
 
+    // Œ
+    U_SODANS,
+    U_CODANS,
+
     // ẞ
     U_SESZET,
     U_CESZET,

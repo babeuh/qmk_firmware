@@ -55,6 +55,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case BKC_GUI:
             handle_bkc(KC_LGUI, record, true);
             return false;
+        case TO(_BASE):
+            layer_off(get_highest_layer(layer_state));
+            return false;
+        case TO(_GAM):
+            if (record->event.pressed) {
+                uint8_t current_layer = get_highest_layer(layer_state);
+                layer_off(current_layer);
+                if (layer_state_is(_GAM)) {
+                    layer_off(_GAM);
+                } else {
+                    layer_on(_GAM);
+                }
+            }
+            return false;
         case LT(_GAM, KC_NO):
             return handle_lr(_GAM, record);
         case LT(_EXT, KC_NO):
@@ -206,9 +220,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_EXT] = LAYOUT(
-        KC_ESC,  KC_TAB,  KC_ENT,  KC_BSPC,  KC_MPRV,    QK_BOOT,          KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI,
-        BKC_ESC, BKC_TAB, BKC_ENT, BKC_BSP,  KC_MPLY,    LT(_GAM, KC_NO),  BKC_SFT, BKC_CTL, BKC_ALT, BKC_GUI,
-        KC_NO,   KC_NO,   KC_NO,   KC_DEL,   KC_MNXT,    KC_NO,            KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT,
+        KC_ESC,  KC_TAB,  KC_ENT,  KC_BSPC,  KC_MPRV,    QK_BOOT,  KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI,
+        BKC_ESC, BKC_TAB, BKC_ENT, BKC_BSP,  KC_MPLY,    TO(_GAM), BKC_SFT, BKC_CTL, BKC_ALT, BKC_GUI,
+        KC_NO,   KC_NO,   KC_NO,   KC_DEL,   KC_MNXT,    KC_NO,    KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT,
                                     TO(_BASE), KC_NO,    KC_NO, KC_NO
     ),
 
@@ -223,13 +237,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_SLSH, KC_7, KC_8, KC_9, KC_PLUS,    KC_NO, KC_F12, KC_F11, KC_F10, KC_F9,
         KC_0,    KC_1, KC_2, KC_3, KC_MINS,    KC_NO, KC_F4,  KC_F3,  KC_F2,  KC_F1,
         KC_ASTR, KC_4, KC_5, KC_6, KC_EQL,     KC_NO, KC_F8,  KC_F7,  KC_F6,  KC_F5,
-                              KC_NO, KC_NO,    KC_NO, TO(_BASE)
+                      TO(_BASE), TO(_BASE),    KC_NO, KC_NO
     ),
 
     [_ACC] = LAYOUT(
         XP(U_SOCIRC, U_COCIRC), XP(U_SUCIRC, U_CUCIRC), XP(U_SACIRC, U_CACIRC), XP(U_SECIRC, U_CECIRC), XP(U_SITREM, U_CITREM),    KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
         XP(U_SOTREM, U_COTREM), XP(U_SUTREM, U_CUTREM), XP(U_SATREM, U_CATREM), XP(U_SEAIGU, U_CEAIGU), XP(U_SETREM, U_CETREM),    KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
         XP(U_SCCEDI, U_CCCEDI), XP(U_SESZET, U_CESZET), XP(U_SAGRAV, U_CAGRAV), XP(U_SEGRAV, U_CEGRAV), XP(U_SODANS, U_CODANS),    KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
-        TO(_BASE), KC_NO,    KC_NO, KC_NO
+        KC_NO, KC_NO,    TO(_BASE), TO(_BASE)
     ),
 };

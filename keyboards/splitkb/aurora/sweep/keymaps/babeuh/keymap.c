@@ -56,7 +56,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             handle_bkc(KC_LGUI, record, true);
             return false;
         case TO(_BASE):
-            layer_off(get_highest_layer(layer_state));
+            if (record->event.pressed) {
+                layer_off(get_highest_layer(layer_state));
+            }
             return false;
         case TO(_GAM):
             if (record->event.pressed) {

@@ -3,7 +3,7 @@
 #include "os_detection.h"
 
 
-void handle_bkc(uint16_t keycode, keyrecord_t *record, bool osm) {
+static void handle_bkc(uint16_t keycode, keyrecord_t *record, bool osm) {
     if (record->event.pressed) {
         if (!osm) {
             tap_code16(keycode);
@@ -16,7 +16,7 @@ void handle_bkc(uint16_t keycode, keyrecord_t *record, bool osm) {
     }
 }
 
-bool handle_lr(uint8_t layer, keyrecord_t *record) {
+static bool handle_lr(uint8_t layer, keyrecord_t *record) {
     if (record->tap.count && record->event.pressed) {
         uint8_t current_layer = get_highest_layer(layer_state);
         if (current_layer == layer) {
@@ -73,10 +73,12 @@ static void process_altrep_change(uint16_t keycode, uint8_t mods) {
         case KC_9:    actioned=true; final_keycode=KC_F9;   break;
     }
 
-    if (!actioned || altrep_change_is_forced_equal) {
+    if (actioned && altrep_change_is_forced_equal) actioned = false;
+
+    if (!actioned) {
         if(final_keycode != KC_NO) final_keycode=KC_NO;
         tap_code16(KC_EQL);
-    } else if (actioned) {
+    } else {
         set_last_keycode(final_keycode);
     }
 }
@@ -103,18 +105,18 @@ static void process_altrep_switch(uint16_t keycode, uint8_t mods) {
 }
 
 bool altrep_triggered = false;
-void trigger_altrep_result(uint16_t keycode) {
+static void trigger_altrep_result(uint16_t keycode) {
     if (keycode != ALTREP_C && keycode != ALTREP_S && final_keycode != KC_NO) {
         uint16_t keycode_to_press = final_keycode;
         final_keycode = KC_NO;
         altrep_triggered = true;
         tap_code16(keycode_to_press);
-        set_last_keycode(KC_NO);
+        altrep_change_is_forced_equal = true;
     }
 }
 
 uint16_t accent_deadkey_pressed = KC_NO;
-void trigger_accent_deadkey_result(uint16_t keycode) {
+static void trigger_accent_deadkey_result(uint16_t keycode) {
     bool is_shifted = (get_mods() & MOD_MASK_SHIFT || get_oneshot_mods() & MOD_MASK_SHIFT);
     clear_oneshot_mods();
     switch (accent_deadkey_pressed) {
@@ -273,7 +275,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         altrep_triggered = false;
         altrep_change_is_forced_equal = true;
     }
-    if (altrep_change_is_forced_equal && keycode != ALTREP_C) altrep_change_is_forced_equal = false;
     switch (keycode) {
         case BKC_ESC:
             handle_bkc(KC_ESC, record, false);
@@ -344,7 +345,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_7:
         case KC_8:
         case KC_9:
-            if (record->event.pressed) return false;
+            if (record->event.pressed) {
+                altrep_change_is_forced_equal = false;
+                return false;
+            }
             if (altrep_triggered) break;
             final_keycode = keycode;
             return false;

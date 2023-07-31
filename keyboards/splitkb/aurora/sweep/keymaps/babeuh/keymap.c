@@ -3,6 +3,19 @@
 #include "os_detection.h"
 
 
+static void handle_bkc(uint16_t keycode, keyrecord_t *record, bool osm) {
+    if (record->event.pressed) {
+        if (!osm) {
+            tap_code16(keycode);
+        } else {
+            set_oneshot_mods(MOD_BIT(keycode));
+        }
+        uint8_t current_layer = get_highest_layer(layer_state);
+        if (current_layer == _BASE) return;
+        layer_off(current_layer);
+    }
+}
+
 uint16_t accent_deadkey_pressed = KC_NO;
 static void trigger_accent_deadkey_result(uint16_t keycode) {
     bool is_shifted = (get_mods() & MOD_MASK_SHIFT || get_oneshot_mods() & MOD_MASK_SHIFT);
@@ -158,6 +171,15 @@ static void trigger_accent_deadkey_result(uint16_t keycode) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+        case BKC_CTL:
+            handle_bkc(KC_LCTL, record, true);
+            return false;
+        case BKC_ALT:
+            handle_bkc(KC_LALT, record, true);
+            return false;
+        case BKC_GUI:
+            handle_bkc(KC_LGUI, record, true);
+            return false;
         case TO(_BASE):
             if (record->event.pressed) {
                 layer_off(get_highest_layer(layer_state));
@@ -268,9 +290,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_EXT] = LAYOUT(
-        KC_NO,  KC_NO,  KC_NO,  KC_NO,   KC_MPRV,    QK_BOOT,  KC_LGUI, OSM(MOD_LCTL), OSM(MOD_LALT), OSM(MOD_LGUI),
-        KC_ESC, KC_TAB, KC_ENT, KC_BSPC, KC_MPLY,    TO(_GAM), KC_LEFT, KC_DOWN,       KC_UP,         KC_RGHT,
-        KC_NO,  KC_NO,  KC_NO,  KC_DEL,  KC_MNXT,    AC_SPEC,  AC_AIGU, AC_GRAV,       AC_TREM,       AC_CIRC,
+        KC_NO,  KC_NO,  KC_NO,  KC_NO,   KC_MPRV,    QK_BOOT,  KC_LGUI, BKC_CTL, BKC_ALT, BKC_GUI,
+        KC_ESC, KC_TAB, KC_ENT, KC_BSPC, KC_MPLY,    TO(_GAM), KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT,
+        KC_NO,  KC_NO,  KC_NO,  KC_DEL,  KC_MNXT,    AC_SPEC,  AC_AIGU, AC_GRAV, AC_TREM, AC_CIRC,
                                     KC_NO, KC_NO,    KC_NO, KC_NO
     ),
 

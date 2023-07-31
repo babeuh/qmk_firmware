@@ -13,6 +13,9 @@ enum custom_keys {
     AC_AIGU,
     AC_TREM,
     AC_CIRC,
-    AC_SPEC
+    AC_SPEC,
+    BKC_CTL,
+    BKC_ALT,
+    BKC_GUI,
 };
 
